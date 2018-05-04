@@ -123,7 +123,7 @@ toggleDropdown(){
                         this.externalEvents.onItemSelect(finalObj);
                     }
                 };
-        thi.isChecked = function (id) {
+        this.isChecked = function (id) {
                     if (this.singleSelection) {
                         return this.selectedModel !== null && athis.selectedModel[this.settings.idProp] !== undefined && this.selectedModel[this.settings.idProp] === getFindObj(id)[this.settings.idProp];
                     }

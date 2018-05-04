@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { HttpClient } from '@angular/common/http';
 import { IndexDBModal } from './app.indexdb';
 import { WindowRef } from './app.windowref';
 @Component({
@@ -44,7 +45,7 @@ export class RegisterComponent extends IndexDBModal implements OnInit{
    password: FormControl;
    email: FormControl;
    message: string;
-   constructor(private z: WindowRef){
+   constructor(private z: WindowRef, private http: HttpClient){
         super(z)
    }    
    ngOnInit(){
@@ -63,7 +64,11 @@ console.log("this,", this)
    register(){
        if(this.myRegisterFrom.valid){
            console.log(this.myRegisterFrom)
-           this.add({id: this.username.value, data: this.myRegisterFrom.value }).then((msg)=> console.log(this.message = msg));
+           this.http.post("http://localhost:9090/register",  this.myRegisterFrom.value )
+           .subscribe( (msg) => {
+               console.log(msg);
+           })
+         //  this.add({id: this.username.value, data: this.myRegisterFrom.value }).then((msg)=> console.log(this.message = msg));
        }
        console.log(this.myRegisterFrom.valid);
    }
