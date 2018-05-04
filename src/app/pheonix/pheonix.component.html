@@ -1,0 +1,14 @@
+  <form [formGroup]="myForm">
+  <select formControlName="company" (change) = "changeCompany()" class="form-control" #company>
+    <option *ngFor="let comp of companies">{{comp}}</option>    
+  </select>
+  </form>
+  <button (click) = "eventTest($event)"></button>
+<nav>
+  <ul>
+  <li><a routerLink="./enterData">Form</a></li>
+  <li><a routerLink="./showData">Data</a></li>
+  </ul>
+</nav>
+<ng-content></ng-content>
+<router-outlet></router-outlet>

@@ -1,0 +1,29 @@
+<div options="caseDespositionOptions" selected-model="alerts.caseDisposition" search-filter="newCase.caseDespositionFilter"
+  extra-settings="locationSiteIdSettings" translation-texts="caseDisopsitionCustomText" id="caseDesposition" alloptions="caseDesopsitionFullOptions"
+  class="ng-isolate-scope">
+  <div class="multiselect-parent btn-group dropdown-multiselect"><button type="button" class="dropdown-toggle ng-binding btn btn-default" ng-class="settings.buttonClasses" (click)="toggleDropdown()">Search by Case Disposition&nbsp;<span class="caret"></span></button>
+    <ul
+      class="dropdown-menu dropdown-menu-form" [ngStyle]="{display: open ? 'block' : 'none', height : settings.scrollable ? settings.scrollableHeight : 'auto' }"
+      style="overflow: scroll; display: none; height: 200px;">
+      <li *ngIf="!settings.showCheckAll || settings.selectionLimit > 0" class="ng-hide"><a (click)="selectAll()" class="ng-binding"><span class="glyphicon glyphicon-ok"></span>  Check All</a></li>
+      <li
+        *ngIf="settings.showUncheckAll" class=""><a (click)="deselectAll();" class="ng-binding"><span class="glyphicon glyphicon-remove"></span>   Uncheck All</a></li>
+        <li
+          *ngIf="(!settings.showCheckAll || settings.selectionLimit > 0) && !settings.showUncheckAll" class="divider"></li>
+          <li *ngIf="settings.enableSearch" class="">
+            <div class="dropdown-header"><input type="text" class="form-control ng-pristine ng-untouched ng-valid" style="width: 100%;" [(ngModel)]="searchFilter"
+                placeholder="Search..."></div>
+          </li>
+          <li *ngIf="settings.enableSearch" class="divider"></li>
+          <!-- ngRepeat: option in options | filter: searchFilter -->
+          <li role="presentation" *ngFor="let option of options | searchw: searchFilter" class="ng-scope">
+            <a role="menuitem" tabindex="-1" (click)="setSelectedItem(getPropertyForObject(option,settings.idProp))" class="ng-binding"><span data-ng-class="{'glyphicon glyphicon-ok': isChecked(getPropertyForObject(option,settings.idProp))}"></span>{{option.name}}</a>
+          </li>
+          <!-- end ngRepeat: option in options | filter: searchFilter -->
+         
+          <!-- end ngRepeat: option in options | filter: searchFilter -->
+          <li class="divider" *ngIf="settings.selectionLimit > 1"></li>
+          <li role="presentation" *ngIf="settings.selectionLimit > 1" class=""><a role="menuitem" class="ng-binding">0 / 5 checked</a></li>
+          </ul>
+  </div>
+</div>

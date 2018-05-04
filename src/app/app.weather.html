@@ -1,0 +1,11 @@
+
+                    <form [formGroup] = "weatherForm">
+                    <a href="javascript:void(0)" (click) = "getWeather()"><span  class="glyphicon glyphicon-refresh"></span></a>
+                    <h3> <select class="form-control" formControlName="city" (change) = "getWeather()">
+                            <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+                        </select></h3>
+                        </form>
+                    <h1>Temp - <span class="red">{{temperature | number : '1.0-1'}} C</span></h1>
+                    <h3>Humidity - {{humidity}}%</h3>
+                    <h3>Pressure - {{pressure}}</h3>
+                     <h3>Population - {{population | number}}</h3>

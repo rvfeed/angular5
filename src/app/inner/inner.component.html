@@ -1,0 +1,16 @@
+<div class="col-md-12">
+   <form [formGroup] = "myUser">
+<div class="form-group">
+ 
+<input type="text" formControlName="name"  class="form-control" (keyup.enter) = "save()" name="name"/>
+</div>
+<div class="form-group">
+<input type="text" formControlName="education"  class="form-control" (keyup.enter) = "save()" name="education"/>
+</div>
+<div class="form-group">
+<input type="button" class="btn btn-primary" name="save" value="Save" (click) = "save()"/>
+</div>
+   </form>
+  User Details: 
+  <div *ngFor="let user of users"> Name: {{user.name}}, Education: {{user.education}} </div> 
+</div>
