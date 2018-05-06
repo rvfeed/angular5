@@ -17,6 +17,7 @@ export class DropdownComponent implements OnInit {
  searchFilter: any;
  selectedModel: Array<any> = [];
  singleSelection: boolean;
+options: Object[];
   constructor() { 
     this.searchFilter = this.searchFilter || '';    
   }
@@ -122,13 +123,13 @@ toggleDropdown(){
                         this.selectedModel.push(finalObj);
                         this.externalEvents.onItemSelect(finalObj);
                     }
-                };
-        this.isChecked = function (id) {
+                }
+        isChecked(id) {
                     if (this.singleSelection) {
-                        return this.selectedModel !== null && athis.selectedModel[this.settings.idProp] !== undefined && this.selectedModel[this.settings.idProp] === getFindObj(id)[this.settings.idProp];
+                        return this.selectedModel !== null && this.selectedModel[this.settings.idProp] !== undefined && this.selectedModel[this.settings.idProp] === this.getFindObj(id)[this.settings.idProp];
                     }
 
-                    return _.findIndex(this.selectedModel, getFindObj(id)) !== -1;
+                    return _.findIndex(this.selectedModel, this.getFindObj(id)) !== -1;
                 };
 
 

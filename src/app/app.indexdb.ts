@@ -5,8 +5,8 @@ import { WindowRef } from './app.windowref';
 export class IndexDBModal{
     constructor(private w : WindowRef){
                //prefixes of implementation that we want to test
-             //   this.w = this.w.nativeWindow;
-    this.w.indexedDB = this.w.indexedDB ||  this.w.mozIndexedDB ||  this.w.webkitIndexedDB ||  this.w.msIndexedDB;
+    this.w = this.w.nativeWindow || this.w;
+    //this.w.indexedDB = this.w.indexedDB ||  this.w.mozIndexedDB ||  this.w.webkitIndexedDB ||  this.w.msIndexedDB;
      
     //prefixes of window.IDB objects
     this.w.IDBTransaction = this.w.IDBTransaction || this.w.webkitIDBTransaction || this.w.msIDBTransaction;
@@ -35,8 +35,8 @@ console.log(this);
 }
 IntiateDb(){
                    //prefixes of implementation that we want to test
-             //   this.w = this.w.nativeWindow;
-    this.w.indexedDB = this.w.indexedDB ||  this.w.mozIndexedDB ||  this.w.webkitIndexedDB ||  this.w.msIndexedDB;
+                this.w = this.w.nativeWindow || this.w; 
+    //this.w.indexedDB = this.w.indexedDB ||  this.w.mozIndexedDB ||  this.w.webkitIndexedDB ||  this.w.msIndexedDB;
      
     //prefixes of window.IDB objects
     this.w.IDBTransaction = this.w.IDBTransaction || this.w.webkitIDBTransaction || this.w.msIDBTransaction;

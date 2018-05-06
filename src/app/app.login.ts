@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { Router } from "@angular/router"
 import { FormGroup, FormControl } from "@angular/forms";
 import { IndexDBModal } from './app.indexdb';
+import { DbModal } from './services/app.mongodb';
 import { WindowRef } from './app.windowref';
 @Component({
         selector: "login",
@@ -29,12 +30,12 @@ import { WindowRef } from './app.windowref';
   </form>
 </div>
 <router-outlet></router-outlet>`,
-providers: [IndexDBModal]
+providers: [IndexDBModal, DbModal]
 })
 export class LoginComponent   implements OnInit{
    myLoginFrom: FormGroup;
    message: string;
-   constructor(private x: WindowRef, private router: Router, private indexDB: IndexDBModal){
+   constructor(private x: WindowRef, private router: Router, private db: DbModal){
        
    }   
    ngOnInit(){
@@ -46,15 +47,13 @@ this.myLoginFrom = new FormGroup({
    }
    login(){
        console.log(this.myLoginFrom)
-       this.indexDB.read(this.myLoginFrom.value.username).then((result) =>{
-           if(result.data.password == this.myLoginFrom.value.password){
-                this.router.navigate(['home'])
-                this.x.nativeWindow.localStorage.setItem("user", this.myLoginFrom.value.username)
+       this.db.getUser(this.myLoginFrom.value.username).subscribe((result) =>{
+           if(result.password == this.myLoginFrom.value.password){                
+                this.x.nativeWindow.localStorage.setItem("user", this.myLoginFrom.value.username);
+                this.router.navigate(['home']);
            }else{
                this.message = "Please enter valid credentials";
            }
-console.log(result)
-       })
-       console.log(this.myLoginFrom.value);
+       });       
    }
 }

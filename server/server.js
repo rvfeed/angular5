@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import  config  from './config';
-import  connectMongo  from './db/connectDb';  
+import  connectMongo  from './db/connectDb';
+import proutes from "./routes/postRoutes" ;
 const app = express();
 //app.use(express.static("static"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,23 +15,26 @@ app.use((req, res, next) => {
     next(); 
 });
 
-app.get("/", (req, res) => {
-    /*  connectMongo.dbo.collection(config.db).insertMany([{"name": "Raja", "age": 33}])
-    .then( (result) => {
-        console.log(result);
-    }).catch((err) =>{
-        console.log(err);
-    })*/
-    console.log(req.query);
+app.use("/", proutes);
+/*app.get("/", (req, res) => {    
     res.send("welcome Home!");
     res.end();
 });
 
-app.post("/register", (req, res) => {
-    console.log(req.params);
-    console.log(req.query);
-    console.log(config.user);
-    let doc = new Array();
+app.post("/login", (req, res) => {
+    console.log(req.body.user);
+    connectMongo.dbo.collection(config.users).findOne({"username": req.body.user},
+             (err, result) => {
+                if (err) throw err;                
+                connectMongo.db.close();
+                res.json(result);
+                res.end();
+      });
+    
+    
+});*/
+app.post("/register", (req, res) => {    
+    let doc = [];
     doc.push(req.body);
      connectMongo.dbo.collection(config.users).insertMany(doc)
     .then( (result) => {
@@ -38,7 +42,7 @@ app.post("/register", (req, res) => {
     }).catch((err) =>{
         console.log(err);
     })
-    res.send("success");
+    res.json({"response": "success" });
     res.end();
 })
 

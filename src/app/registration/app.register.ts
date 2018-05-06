@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
-import { IndexDBModal } from './app.indexdb';
-import { WindowRef } from './app.windowref';
+import { IndexDBModal } from '../app.indexdb';
+import { WindowRef } from '../app.windowref';
+import { messages, urls } from '../app.constants';
 @Component({
         selector: "register",
         template: `<div class="col-md-3 left card">
@@ -63,12 +64,12 @@ console.log("this,", this)
    }
    register(){
        if(this.myRegisterFrom.valid){
-           console.log(this.myRegisterFrom)
-           this.http.post("http://localhost:9090/register",  this.myRegisterFrom.value )
+           console.log(urls.registerUrl)
+           this.http.post(urls.registerUrl,  this.myRegisterFrom.value )
            .subscribe( (msg) => {
-               console.log(msg);
+               console.log(messages.registration.success);
            })
-         //  this.add({id: this.username.value, data: this.myRegisterFrom.value }).then((msg)=> console.log(this.message = msg));
+           //this.add({id: this.username.value, data: this.myRegisterFrom.value }).then((msg)=> console.log(this.message = msg));
        }
        console.log(this.myRegisterFrom.valid);
    }

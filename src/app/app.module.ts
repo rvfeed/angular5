@@ -3,10 +3,10 @@ import { NgModule, Injectable } from '@angular/core';
 import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HttpClient} from '@angular/common/http'
-import { AppComponent } from './app.component';
-import { AppWeatherComponent } from './app.weather';
+import { AppComponent } from './component/app.component';
+import { AppWeatherComponent } from './weather/app.weather';
 import { LoginComponent } from './app.login';
-import { RegisterComponent } from './app.register';
+import { RegisterComponent } from './registration/app.register';
 import { DefaultComponent } from './app.default';
 import { WindowRef } from './app.windowref';
 import { HeaderComponent } from './app.header';

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
-import { AppGetcurrenciesService } from './app.getcurrencies.service';
-import { CurResponse } from './app.curtype';
+import { AppGetcurrenciesService } from '../app.getcurrencies.service';
+import { CurResponse } from '../app.curtype';
 
 @Component({
   selector: 'app-root',
