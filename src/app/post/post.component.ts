@@ -22,7 +22,10 @@ postData: Istatus;
 constructor(private w: WindowRef, private indexDB: IndexDBModal, private db: DbModal) { }
 
 ngOnInit(){
-  console.log(this.w.nativeWindow)
+  console.log(this.w.nativeWindow);
+  this.db.readAllPosts().subscribe((data: any) => {      
+     this.postData = data.result;
+    });
 }
 
 private updateStatus(data, user: string){
@@ -61,13 +64,17 @@ postStatus(){
   let user = this.w.user || "raj";  
   this.db.postStatus(this.postForm.value.status).subscribe( (msg: any) => {
     console.log(msg)
+    this.db.readAllPosts().subscribe((data: any) => { 
+      console.log(data.result)     
+     this.postData = data.result;
+    })
     /*if(result && result.username){
        // this.updateStatus(result, user)
     }else{
         //this.addStatus(this.postForm.value.status, user)
     }*/
   //  this.postData = this.postForm.value.status;
-    this.broadcastStatus()
+//    this.broadcastStatus()
      this.postForm = new FormGroup({
  status: new FormControl("", [Validators.required, Validators.minLength(10)])});
  

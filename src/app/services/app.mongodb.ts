@@ -11,4 +11,25 @@ export class DbModal{
     postStatus(status: string){
         return this.http.post(urls.postStatus, {status});
     }
+    readPost(id){
+        return this.http.get(urls.readPost+"/"+id);
+    }
+    readAllPosts(){
+        return this.http.get(urls.readAllPosts);
+    }
+    deletePost(id){        
+        return this.http.delete(urls.postStatus+"/"+id);
+    }
+    likeStatus(id, like){
+        return this.http.post(urls.likeStatus+"/"+id, {like});
+    }
+    addComment(id, comment){
+        return this.http.post(urls.addComment+"/"+id, {comment});
+    }
+    deleteComment(commentId: number, postId: string){
+        return this.http.post(urls.deleteComment+"/"+postId, {commentId});
+    }
+    likeComment(commentId: number, postId: string){
+         return this.http.post(urls.likeComment+"/"+postId, {commentId});
+    }
 }

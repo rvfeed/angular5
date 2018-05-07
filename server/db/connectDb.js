@@ -4,8 +4,10 @@ class ConnectMongo{
     dbUrl;
     dbo;
     db;
+    ObjectId;
     constructor(){
         this.dbUrl = config.dbUrl;
+        this.ObjectId = mongodb.ObjectID;
         mongodb.MongoClient.connect(config.dbUrl, (err, db) => {
                 if(err){
                     throw err;

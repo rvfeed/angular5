@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { WindowRef } from '../app.windowref';
 import { IndexDBModal } from '../app.indexdb';
+import { DbModal } from "../services/app.mongodb";
 import { IPost } from '../interface/app.postInterfaces';
 
 @Component({
@@ -11,8 +12,8 @@ import { IPost } from '../interface/app.postInterfaces';
 })
 export class CommentComponent implements OnInit {
 @Input("comment-data") comments:any;
-@Input() postNum : number;
-  constructor(private indexDB: IndexDBModal, private w: WindowRef) { 
+@Input() postNum : string;
+  constructor(private indexDB: IndexDBModal, private w: WindowRef, private db: DbModal) { 
   //  this.comments = this.comments.comments;
       console.log(this.comments);
   }
@@ -20,36 +21,31 @@ getUserData(){
   return  this.indexDB.read(this.w.user+""+1);
 }
  ngOnChange(){
-   this.comments = this.comments.comments;
-    console.log(this.comments);
+
  }
 likeIt(index){
-   this.getUserData()
-    .then(res =>{
-      let comments = res.data[this.postNum].comments;
-      let likes = comments[index].likes || 0;
-      comments[index].likes = likes+1;
-       this.indexDB.update(res)
-        .then( msg => {
-          this.comments[index].likes = comments[index].likes;
-        })
-    })
+ this.db.likeComment(index, this.postNum)
+ .subscribe( res => {
+   this.readData();
+ })
 }
-
+readData(){
+   this.db.readPost(this.postNum)
+     .subscribe( (data: any) => {
+       console.log(data.result)
+       this.comments = data.result[0].comments;
+     })
+}
  remove(index: number){
-    this.getUserData()
-    .then(res =>{
-        console.log(res.data[this.postNum].comments[index]);
-        res.data[this.postNum].comments.splice(index, 1);
-        this.indexDB.update(res)
-        .then( msg => {
-          this.comments = res.data[this.postNum].comments;
-        })
-    });
+   console.log(index);
+   this.db.deleteComment(index, this.postNum)
+   .subscribe( msg => {
+      this.readData();
+   }); 
  }
   ngOnInit() {
     console.log(this.postNum);
-    this.comments = this.comments.comments;
+
     console.log(this.comments);
   }
 
