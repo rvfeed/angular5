@@ -1,6 +1,7 @@
 import express from 'express';
 import  UserCtrl  from "../ctrls/userCtrl";
 import  PostCtrl  from "../ctrls/postCtrl";
+import mongodb from "../db/connectDb";
 let routes = express.Router();
 let uCtrl = new UserCtrl()
 let pCtrl = new PostCtrl()
@@ -11,7 +12,7 @@ routes.post("/login", (req, res) => {
         res.end();
     })
     .catch( err => {
-        console.log(err);
+   //     console.log(err);
     });
 });
 
@@ -26,7 +27,7 @@ routes.post("/postStatus", (req, res) =>{
         res.json({"success": true});
     })
     .catch(err => {
-        console.log(err);
+    //    console.log(err);
         res.json({"success": false});
     })
 })
@@ -38,7 +39,7 @@ routes.get("/readPost/:id", (req, res) =>{
         res.end()
     })
     .catch( err => {
-        console.log(err);
+   //     console.log(err);
         res.end();
     })
 })
@@ -49,7 +50,7 @@ routes.get("/readPost/:id", (req, res) =>{
         res.end()
     })
     .catch(err => {
-        console.log(err);
+   //     console.log(err);
         res.json({"success": false});
         res.end()
     })
@@ -80,7 +81,7 @@ routes.post("/addComment/:id", (req, res) =>{
         res.json({"success": true});
     })
     .catch(err => {
-        console.log(err);
+    //    console.log(err);
         res.json({"success": false});
     })
 });
@@ -90,7 +91,7 @@ routes.post("/deleteComment/:id", (req, res) =>{
         res.json({"success": true});
     })
     .catch(err => {
-        console.log(err);
+     //   console.log(err);
         res.json({"success": false});
     })
 });
@@ -100,7 +101,7 @@ routes.post("/likeComment/:id", (req, res) =>{
         res.json({"success": true});
     })
     .catch(err => {
-        console.log(err);
+   //     console.log(err);
         res.json({"success": false});
     })
 });
@@ -113,7 +114,7 @@ routes.get("/readAllPosts", (req, res) => {
         res.end()
     })
     .catch( err => {
-        console.log(err);
+    //    console.log(err);
         res.end();
     })
 })

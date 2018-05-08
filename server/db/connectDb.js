@@ -15,6 +15,7 @@ class ConnectMongo{
                     this.db = db;                 
                     this.dbo = this.db.db(config.db);                }                
             });
+            console.log("dbdbdbdb");
     }
     connect(){
      
