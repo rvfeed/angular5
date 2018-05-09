@@ -107,9 +107,10 @@ routes.post("/likeComment/:id", (req, res) =>{
 });
 
 routes.get("/readAllPosts", (req, res) => {
+   
     pCtrl.readAll()
     .then(result => {
-      //  console.log(result);
+        console.log(result);
         res.json({"result": result});
         res.end()
     })

@@ -36,7 +36,7 @@ app.post("/login", (req, res) => {
 app.post("/register", (req, res) => {    
     let doc = [];
     doc.push(req.body);
-     connectMongo.dbo.collection(config.users).insertMany(doc)
+     connectMongo.dbo.collection("users").insertMany(doc)
     .then( (result) => {
         console.log(result);
     }).catch((err) =>{
@@ -49,3 +49,5 @@ app.post("/register", (req, res) => {
 app.listen(config.port, () => {
     console.log("Server is listening to "+config.port);
 });
+
+module.exports = app;

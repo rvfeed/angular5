@@ -6,16 +6,19 @@ class ConnectMongo{
     db;
     ObjectId;
     constructor(){
-        this.dbUrl = config.dbUrl;
+        this.dbUrl = config.db;
+        console.log(config);
         this.ObjectId = mongodb.ObjectID;
-        mongodb.MongoClient.connect(config.dbUrl, (err, db) => {
+        console.log(config.db);
+        console.log(config.database);
+        mongodb.MongoClient.connect(config.db, (err, db) => {
                 if(err){
                     throw err;
                 } else{   
                     this.db = db;                 
-                    this.dbo = this.db.db(config.db);                }                
+                    this.dbo = this.db.db(config.database);                }                
             });
-            console.log("dbdbdbdb");
+            console.log(config.database);
     }
     connect(){
      

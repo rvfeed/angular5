@@ -1,6 +1,6 @@
 var request = require("request"),
     assert = require('assert'),
-    helloWorld = require("./server.js"),
+    helloWorld = require("../server.js"),
     base_url = "http://localhost:9090/";
 
 describe("Hello World Server", function() {
