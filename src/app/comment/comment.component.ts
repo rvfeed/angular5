@@ -1,25 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { WindowRef } from '../app.windowref';
-import { IndexDBModal } from '../app.indexdb';
 import { DbModal } from "../services/app.mongodb";
 import { IPost } from '../interface/app.postInterfaces';
 
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.css']
+  styleUrls: ['./comment.component.css'],
+  providers: [DbModal]
 })
 export class CommentComponent implements OnInit {
-@Input("comment-data") comments:any;
+@Input() comments:any;
 @Input() postNum : string;
-  constructor(private indexDB: IndexDBModal, private w: WindowRef, private db: DbModal) { 
+  constructor(private db: DbModal) { 
   //  this.comments = this.comments.comments;
       console.log(this.comments);
   }
-getUserData(){
-  return  this.indexDB.read(this.w.user+""+1);
-}
+
  ngOnChange(){
 
  }

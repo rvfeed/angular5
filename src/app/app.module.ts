@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injectable } from '@angular/core';
 import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule, HttpClient} from '@angular/common/http'
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+import { DbModal } from "./services/app.mongodb";
 import { AppComponent } from './component/app.component';
 import { AppWeatherComponent } from './weather/app.weather';
 import { LoginComponent } from './app.login';
@@ -26,6 +27,7 @@ import { CompantdetailsComponent } from './pheonix/company/compantdetails/compan
 import { PostComponent } from './post/post.component';
 import { WallComponent } from './wall/wall.component';
 import { CommentComponent } from './comment/comment.component';
+import { SearchPipe } from './search.pipe';
 //import { LogoutComponent } from './app.logout';
 
 
@@ -60,7 +62,8 @@ const routing: ModuleWithProviders = RouterModule.forRoot(routes);
     CompantdetailsComponent,
     PostComponent,
     WallComponent,
-    CommentComponent     
+    CommentComponent,
+    SearchPipe     
   ],
   imports: [
     BrowserModule,
@@ -68,8 +71,8 @@ const routing: ModuleWithProviders = RouterModule.forRoot(routes);
     FormsModule,
     ReactiveFormsModule,
     routing
-  ],
-  providers: [HttpClient, WindowRef, CanActivateGaurd, CommService, AppGetcurrenciesService],
+  ],  
+  providers: [HttpClient, DbModal, WindowRef, CanActivateGaurd, CommService, AppGetcurrenciesService],
   bootstrap: [DefaultComponent]
 })
 export class AppModule { }

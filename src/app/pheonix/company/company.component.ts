@@ -12,7 +12,7 @@ interface ICompany{
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.css']
 })
-export class CompanyComponent implements OnInit {
+export class CompanyComponent implements OnInit {z
  name: string;
  myCompany: FormGroup;
  floors: number[] = [1, 2, 3, 4, 5, 6,7,8];

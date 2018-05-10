@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { Router } from "@angular/router"
 import { FormGroup, FormControl } from "@angular/forms";
-import { IndexDBModal } from './app.indexdb';
 import { DbModal } from './services/app.mongodb';
 import { WindowRef } from './app.windowref';
 @Component({
@@ -30,7 +29,7 @@ import { WindowRef } from './app.windowref';
   </form>
 </div>
 <router-outlet></router-outlet>`,
-providers: [IndexDBModal, DbModal]
+providers: [DbModal]
 })
 export class LoginComponent   implements OnInit{
    myLoginFrom: FormGroup;
