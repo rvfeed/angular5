@@ -3,14 +3,32 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { AppGetcurrenciesService } from '../app.getcurrencies.service';
 import { AppComponent } from './app.component';
+import { NestedComponent } from '../nested/nested.component';
+import { InnerComponent } from '../inner/inner.component';
+import { UserComponent } from '../user/user.component';
+import { HeaderComponent } from '../app.header';
+import { DropdownComponent } from '../dropdown/dropdown.component';
+import { PheonixComponent } from '../pheonix/pheonix.component';
+import { AppWeatherComponent } from '../weather/app.weather';
+import { SearchPipe } from '../search.pipe';
+import { RouterTestingModule} from '@angular/router/testing';
+import { CommService } from '../comm.service';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        NestedComponent,
+        InnerComponent,
+        UserComponent,
+        HeaderComponent,
+        DropdownComponent,
+        PheonixComponent,
+        AppWeatherComponent,
+        SearchPipe
       ],
-      imports: [ FormsModule, HttpClientTestingModule, ReactiveFormsModule ],
-      providers: [AppGetcurrenciesService]
+      imports: [ FormsModule, RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule ],
+      providers: [AppGetcurrenciesService, CommService]      
     }).compileComponents();
   }));
   it('should create the app', async(() => {

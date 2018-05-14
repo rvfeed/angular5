@@ -7,6 +7,7 @@ import { CommentComponent } from '../comment/comment.component';
 import { WindowRef } from '../app.windowref';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule} from '@angular/router/testing';
+
 describe('PostComponent', () => {
   let component: PostComponent;
   let fixture: ComponentFixture<PostComponent>;

@@ -11,9 +11,9 @@ import { SearchPipe } from '../search.pipe';
 })
 export class DropdownComponent implements OnInit {
  open: boolean = false;
- settings: Object<any> = {};
- texts: Object<any>;
- externalEvents: Object<any>;
+ settings: Object = {};
+ texts: Object;
+ externalEvents: Object;
  searchFilter: any;
  selectedModel: Array<any> = [];
  singleSelection: boolean;

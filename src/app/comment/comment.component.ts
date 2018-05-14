@@ -30,7 +30,9 @@ likeIt(index){
 
 test(){
   //this.testData = 
-  this.db.testAll().subscribe( (d) => { this.testData = d; }); 
+  this.db.testAll().subscribe( (d) => {
+     console.log("***************************************************************************************************"); 
+     this.testData = "jkhjkkjhhk"; }); 
 }
 readData(){
    this.db.readPost(this.postNum)

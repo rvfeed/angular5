@@ -21,7 +21,8 @@ import { WindowRef } from './app.windowref';
     </li>
   </ul>
 </nav>
- `
+ `,
+ providers: [WindowRef]
 })
 export class HeaderComponent {
         constructor(private window : WindowRef, private router : Router){
