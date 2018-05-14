@@ -16,8 +16,7 @@ class PostModel{
         return  mongoDb.dbo.collection("posts").insert(this.post);
     }
     updatePost(record, post){}
-    getAllPosts(){
-        console.log("kdjklasdjlfsjdkl")
+    getAllPosts(){      
         return new Promise((resolve, reject) => {  
              mongoDb.dbo.collection("posts")
                     .find({deleted: { $ne : 1}})
@@ -26,9 +25,8 @@ class PostModel{
                     .toArray((err, posts) => { 
                         if(err){
                         reject(err);
-                    }
-                    console.log("posts", posts)
-                        resolve(posts);
+                    }              
+                    resolve(posts);
                 });
         });
     }

@@ -32,4 +32,7 @@ export class DbModal{
     likeComment(commentId: number, postId: string){
          return this.http.post(urls.likeComment+"/"+postId, {commentId});
     }
+    testAll(){
+         return this.http.get(urls.readAllPosts);
+    }
 }

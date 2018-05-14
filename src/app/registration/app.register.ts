@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
-import { IndexDBModal } from '../app.indexdb';
 import { WindowRef } from '../app.windowref';
 import { messages, urls } from '../app.constants';
 @Component({
@@ -40,7 +39,7 @@ import { messages, urls } from '../app.constants';
   </form>
 </div>`
 })
-export class RegisterComponent extends IndexDBModal implements OnInit{
+export class RegisterComponent implements OnInit{
    myRegisterFrom: FormGroup;
    username: FormControl;
    password: FormControl;

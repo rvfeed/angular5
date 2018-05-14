@@ -12,6 +12,7 @@ import { IPost } from '../interface/app.postInterfaces';
 export class CommentComponent implements OnInit {
 @Input() comments:any;
 @Input() postNum : string;
+testData = ["hello"];
   constructor(private db: DbModal) { 
   //  this.comments = this.comments.comments;
       console.log(this.comments);
@@ -25,6 +26,11 @@ likeIt(index){
  .subscribe( res => {
    this.readData();
  })
+}
+
+test(){
+  //this.testData = 
+  this.db.testAll().subscribe( (d) => { this.testData = d; }); 
 }
 readData(){
    this.db.readPost(this.postNum)

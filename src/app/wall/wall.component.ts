@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { WindowRef } from '../app.windowref';
-import { IndexDBModal } from '../app.indexdb';
 import { DbModal } from "../services/app.mongodb"
 import { IPost, Istatus, Comment } from '../interface/app.postInterfaces';
 
@@ -9,7 +8,7 @@ import { IPost, Istatus, Comment } from '../interface/app.postInterfaces';
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.css'],
-  providers: [IndexDBModal, DbModal]
+  providers: [DbModal]
 })
 export class WallComponent implements  OnInit, OnChanges {
   status: string;
@@ -26,7 +25,7 @@ export class WallComponent implements  OnInit, OnChanges {
   wallData: string[];
    commentForm: FormGroup = new FormGroup({
  comment: new FormControl("", [Validators.required, Validators.minLength(10)])})
-  constructor(private indexDB: IndexDBModal, private w: WindowRef, private db: DbModal) { }
+  constructor(private w: WindowRef, private db: DbModal) { }
 ngOnChanges(changes: SimpleChanges){
   console.log(changes);
   if(changes.wallpost.currentValue && changes.wallpost.currentValue.length){
@@ -43,28 +42,7 @@ readData(){
        this.wallData = data.result;
      })
 }
-refreshWall(user){
 
-     this.readData()
-      .then((res: Istatus) => {
-        try{
-  this.resultWall = res || {data: []};
-      //  this.record = res.data[0] || {};        
-       // this.status = res.data[0].status;
-        this.wallData = res.data;
-        
-    //    this.record.likes = res[0].likes || 0;   
-      //  this.likes = this.record.likes; 
-        console.log(this.resultWall)
-        this.test = this.resultWall.data || ["sadfasdf"]; 
-    //    this.result.data[0].status.push(this.record);
-        }catch(e){
-          console.log(e);
-        }
-      
-      })
-    
-}
   ngOnInit() {  
     this.user = this.w.user;  
   }

@@ -9,9 +9,9 @@ describe('DropdownComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DropdownComponent ],
-      imports: [FormsModule],
-      pipes: [SearchPipe]
+      declarations: [ DropdownComponent, SearchPipe ],
+      imports: [FormsModule]
+      
     })
     .compileComponents();
   }));
