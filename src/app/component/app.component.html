@@ -65,8 +65,9 @@
   <app-dropdown></app-dropdown>
 </div>
 <div class="col-md-9 left card">
-<app-pheonix [testhanges]="testC">
+<app-pheonix (companyE) = "testE($event)" [testhanges]="testC">
   <h2>Hello my Dear!</h2>
+  <app-dropdown></app-dropdown>
 </app-pheonix>
 </div>
 

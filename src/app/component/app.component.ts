@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 import { FormGroup, FormControl } from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
 import { AppGetcurrenciesService } from '../app.getcurrencies.service';
 import { CurResponse } from '../app.curtype';
+import { PheonixComponent } from "../pheonix/pheonix.component";
 
 @Component({
   selector: 'app-root',
@@ -17,11 +18,20 @@ export class AppComponent {
   toCurrency:number = 1; 
   result: number;
   testC : number = 1;
+  @ViewChildren(PheonixComponent) pheonixView: QueryList<PheonixComponent>;
   showCurrencies: Object;  
    currencies:Array<string> = ["USD", "INR", "EUR", "GBP"]
   allCurrencies: Array<string> = ["INR","AUD", "BRL", "CAD", "CNY", "GBP", "HKD",  "JPY","NZD", "PHP", "SGD"]
   constructor(private http: HttpClient, private cur : AppGetcurrenciesService){
     
+  }
+  ngAfterViewInit(){
+    let find = this.pheonixView.toArray();
+   // find[0].companyE.on("")
+    console.log(this.pheonixView.toArray());
+  }
+  testE(v){
+    console.log("vvvvvv", v);
   }
   ngOnInit(){  
     this.myFrom = new FormGroup({
@@ -37,9 +47,7 @@ export class AppComponent {
     });
     this.convert();
   } 
-testE(r){
-  console.log("testE", r)
-}
+
   convert(){
      console.log(this.myFrom.value);
     let url:string = this.cur.formUrl(this.myFrom.value.fromCur, this.myFrom.value.toCur);    

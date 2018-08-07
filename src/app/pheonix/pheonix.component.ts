@@ -1,6 +1,9 @@
-import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges,
+        ContentChild, QueryList } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CommService } from '../comm.service';
+import { DropdownComponent } from '../dropdown/dropdown.component';
+
 
 @Component({
   selector: 'app-pheonix',
@@ -10,10 +13,12 @@ import { CommService } from '../comm.service';
 export class PheonixComponent implements OnInit {
   myForm: FormGroup;
   @Input() testhanges = "1";
-  companyE: EventEmitter<string>;
+  @Output() companyE = new EventEmitter<string>();
+  @ContentChild(DropdownComponent) contentC : QueryList<DropdownComponent>;
  companies: string[] = ["Valuelabs", "Kony", "Optum", "HCL"];
   comp: string = this.companies[0];  
   constructor(private comm: CommService) {
+    
     comm.broadcastCompany(this.comp);
    }
  eventTest(text){
@@ -26,6 +31,7 @@ export class PheonixComponent implements OnInit {
    
     //
   }
+
   ngOnChanges(changes: SimpleChanges){
 console.log("changes", changes)
 }
@@ -33,7 +39,7 @@ console.log("changes", changes)
   console.log("testE", r)
 }
 ngAfterContentInit(){
-  console.log("ngAfterContentInit")
+//  console.log(this.contentC.options.push({"name": "Raj"}))
 }
   changeCompany(){
    

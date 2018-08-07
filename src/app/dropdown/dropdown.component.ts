@@ -5,19 +5,18 @@ import { SearchPipe } from '../search.pipe';
 
 @Component({
   selector: 'app-dropdown',
-  templateUrl: './dropdown.component.html',
-   pipes: [SearchPipe],
+  templateUrl: './dropdown.component.html',  
   styleUrls: ['./dropdown.component.css']
 })
 export class DropdownComponent implements OnInit {
  open: boolean = false;
- settings: Object = {};
- texts: Object;
- externalEvents: Object;
+ settings: any = {};
+ texts:any;
+ externalEvents: any;
  searchFilter: any;
  selectedModel: Array<any> = [];
  singleSelection: boolean;
-options: Object[];
+ options: any;
   constructor() { 
     this.searchFilter = this.searchFilter || '';    
   }
@@ -106,8 +105,8 @@ toggleDropdown(){
 
                     if (this.singleSelection) {
                         this.clearObject(this.selectedModel);
-                        angular.extend(this.selectedModel, finalObj);
-                        this.externalEvents.onItemSelect(finalObj);
+                     //   angular.extend(this.selectedModel, finalObj);
+                        //this.externalEvents.onItemSelect(finalObj);
 
                         return;
                     }
@@ -118,13 +117,13 @@ toggleDropdown(){
 
                     if (!dontRemove && exists) {
                         this.selectedModel.splice(_.findIndex(this.selectedModel, findObj), 1);
-                        this.externalEvents.onItemDeselect(findObj);
+                    //    this.externalEvents.onItemDeselect(findObj);
                     } else if (!exists && (this.settings.selectionLimit === 0 || this.selectedModel.length < this.settings.selectionLimit)) {
                         this.selectedModel.push(finalObj);
-                        this.externalEvents.onItemSelect(finalObj);
+                     //   this.externalEvents.onItemSelect(finalObj);
                     }
                 }
-        isChecked(id) {
+        isChecked = function (id) {
                     if (this.singleSelection) {
                         return this.selectedModel !== null && this.selectedModel[this.settings.idProp] !== undefined && this.selectedModel[this.settings.idProp] === this.getFindObj(id)[this.settings.idProp];
                     }

@@ -12,7 +12,7 @@ import { IPost } from '../interface/app.postInterfaces';
 export class CommentComponent implements OnInit {
 @Input() comments:any;
 @Input() postNum : string;
-testData = ["hello"];
+testData: string;
   constructor(private db: DbModal) { 
   //  this.comments = this.comments.comments;
       console.log(this.comments);

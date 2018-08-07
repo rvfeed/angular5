@@ -29,14 +29,14 @@ let backend;
 
   it("test comment", inject([DbModal], fakeAsync((db: DbModal) => {
      const response = [];
-spyOn(db, 'testAll').and.returnValue(of([{"result": "success"}]))
+spyOn(db, 'testAll').and.returnValue(of("result", "success"))
 //console.log("xxxxxxxxxxxxxx",db.testAll);
  
     component.postNum = 5;
    // component = fixture.debugElement.componentInstance;
     component.test();
      fixture.detectChanges();   
-    console.log(component.testData)
+    console.log(component.testData);
      
   //  expect(component.testData).toEqual(response);
   })));

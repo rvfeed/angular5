@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit{
    email: FormControl;
    message: string;
    constructor(private z: WindowRef, private http: HttpClient){
-        super(z)
+      //  super(z)
    }    
    ngOnInit(){
        this.username = new FormControl("", Validators.required);
@@ -58,7 +58,7 @@ this.myRegisterFrom = new FormGroup({
     email: this.email
 });
 console.log("this,", this)
- this.IntiateDb();
+ //this.IntiateDb();
       
    }
    register(){

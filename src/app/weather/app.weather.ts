@@ -46,7 +46,7 @@ export class AppWeatherComponent{
     getWeather(){   
     console.log("sdfd");
         this.city = this.weatherForm.value.city;           
-        this.http.get(this.weatherUrl).subscribe(r => {
+        this.http.get(this.weatherUrl).subscribe( (r: any) => {
             console.log(r.list[0]);
             this.temperature = r.list[0].main.temp/10;
              this.humidity = r.list[0].main.humidity;

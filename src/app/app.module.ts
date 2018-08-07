@@ -20,7 +20,6 @@ import { AppGetcurrenciesService } from './app.getcurrencies.service';
 import { ModuleWithProviders } from '@angular/core';
 import 'core-js/es7/reflect';
 import { DropdownComponent } from './dropdown/dropdown.component';
-import { SearchPipe } from './search.pipe';
 import { PheonixComponent } from './pheonix/pheonix.component';
 import { CompanyComponent } from './pheonix/company/company.component';
 import { CompantdetailsComponent } from './pheonix/company/compantdetails/compantdetails.component';
@@ -28,6 +27,7 @@ import { PostComponent } from './post/post.component';
 import { WallComponent } from './wall/wall.component';
 import { CommentComponent } from './comment/comment.component';
 import { SearchPipe } from './search.pipe';
+import { TestDirective } from './directives/test.directive';
 //import { LogoutComponent } from './app.logout';
 
 
@@ -43,7 +43,7 @@ const routes : Routes = [
                         { path: 'register', component: RegisterComponent },                                              
                         { path: 'lazy', loadChildren: 'app/lazy/lazy.module#LazyModule' }
                       ]
-const routing: ModuleWithProviders = RouterModule.forRoot(routes);
+const routing: ModuleWithProviders = RouterModule.forRoot(routes, {useHash: true});
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +63,8 @@ const routing: ModuleWithProviders = RouterModule.forRoot(routes);
     PostComponent,
     WallComponent,
     CommentComponent,
-    SearchPipe     
+    SearchPipe,
+    TestDirective
   ],
   imports: [
     BrowserModule,

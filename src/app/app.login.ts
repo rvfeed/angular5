@@ -46,7 +46,7 @@ this.myLoginFrom = new FormGroup({
    }
    login(){
        console.log(this.myLoginFrom)
-       this.db.getUser(this.myLoginFrom.value.username).subscribe((result) =>{
+       this.db.getUser(this.myLoginFrom.value.username).subscribe((result: any) =>{
            if(result.password == this.myLoginFrom.value.password){                
                 this.x.nativeWindow.localStorage.setItem("user", this.myLoginFrom.value.username);
                 this.router.navigate(['home']);
