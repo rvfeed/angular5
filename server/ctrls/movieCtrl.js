@@ -13,6 +13,12 @@ class MovieCtrl{
     saveMovie(movieData){
       return this.movie.saveMovie(movieData);        
     }
+       deleteMovie(movieId){
+      return this.movie.deleteMovie(movieId);        
+    }
+    updateMovie(id, movie){
+        return this.movie.updateMovie(id, movie);      
+    }
 }
 
 export default MovieCtrl;
