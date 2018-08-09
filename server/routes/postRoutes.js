@@ -17,9 +17,9 @@ routes.post("/login", (req, res) => {
    //     console.log(err);
     });
 });
-routes.get("/movies", (req, res) => { 
- //  console.log(mCtrl)
-   mCtrl.findMovies().then( movies =>{
+routes.get("/movies/:limit", (req, res) => { 
+//   console.log(req.params)
+   mCtrl.findMovies(+req.params.limit).then( movies =>{
 res.json(movies|| {});
     res.end();
     });  
@@ -29,7 +29,8 @@ routes.post("/movies", (req, res) => {
   // console.log("req.body", req.body);
      mCtrl.saveMovie(req.body.movie)
      .then( movie => {
-        res.json({success:true, message: "Movie has been added successfully"});      
+         console.log(movie)
+        res.json({success:true,  data: movie.ops[0], message: "Movie has been added successfully"});      
      })
      .catch( err => {
           res.json({success:false, message: "There was an error while adding movie!"});        
@@ -42,6 +43,7 @@ routes.post("/movie/:id", (req, res) => {
 routes.delete("/movie/:id", (req, res) => { 
         mCtrl.deleteMovie(req.params.id)
      .then( movie => {
+       
         res.json({success:true, message: "Movie has been deleted successfully"});      
      })
      .catch( err => {

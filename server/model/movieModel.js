@@ -5,11 +5,10 @@ class MovieModel{
     findMovie(movie){
         return  mongoDb.dbo.collection("movies").findOne({"username": user });       
     }
-     findMovies(){
+     findMovies(limit){
         return new Promise((resolve, reject) => {
-                mongoDb.dbo.collection("movies").find({deleted: {$ne: 1}}).toArray( (err, movies) => {
-                        if(err) reject(err);
-                        else resolve(movies);
+                mongoDb.dbo.collection("movies").find({deleted: {$ne: 1}}).limit(limit).sort().toArray( (err, movies) => {
+                        if(err) reject(err);  else resolve(movies);
                 }); 
         }) 
               

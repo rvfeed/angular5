@@ -7,8 +7,8 @@ class MovieCtrl{
     findMovie(movie){
        return this.movie.findMovie(movie);        
     }
-     findMovies(){
-       return this.movie.findMovies();        
+     findMovies(limit){
+       return this.movie.findMovies(limit);        
     }
     saveMovie(movieData){
       return this.movie.saveMovie(movieData);        
