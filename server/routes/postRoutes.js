@@ -25,7 +25,7 @@ res.json(movies|| {});
     });  
     
 });
-routes.post("/addmovies", (req, res) => {
+routes.post("/addmovie", (req, res) => {
   // console.log("req.body", req.body);
      mCtrl.saveMovie(req.body.movie)
      .then( movie => {
