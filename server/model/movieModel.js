@@ -5,9 +5,16 @@ class MovieModel{
     findMovie(movie){
         return  mongoDb.dbo.collection("movies").findOne({"username": user });       
     }
-     findMovies(limit){
+     findMovies(obj){
+         let sort = {}, findObj = {};
+         sort[obj.sortBy] = -1;
+         console.log(sort)
+         if(obj.search != '')        
+            findObj.movieName = obj.search;
+         findObj.deleted = {$ne : 1}
+         console.log(findObj)
         return new Promise((resolve, reject) => {
-                mongoDb.dbo.collection("movies").find({deleted: {$ne: 1}}).limit(limit).sort().toArray( (err, movies) => {
+                mongoDb.dbo.collection("movies").find(findObj).limit(+obj.limit).sort(sort).toArray( (err, movies) => {
                         if(err) reject(err);  else resolve(movies);
                 }); 
         }) 

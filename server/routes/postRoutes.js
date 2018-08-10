@@ -17,15 +17,15 @@ routes.post("/login", (req, res) => {
    //     console.log(err);
     });
 });
-routes.get("/movies/:limit", (req, res) => { 
+routes.post("/movies", (req, res) => { 
 //   console.log(req.params)
-   mCtrl.findMovies(+req.params.limit).then( movies =>{
+   mCtrl.findMovies(req.body).then( movies =>{
 res.json(movies|| {});
     res.end();
     });  
     
 });
-routes.post("/movies", (req, res) => {
+routes.post("/addmovies", (req, res) => {
   // console.log("req.body", req.body);
      mCtrl.saveMovie(req.body.movie)
      .then( movie => {
