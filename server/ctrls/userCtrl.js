@@ -7,6 +7,9 @@ class UserCtrl{
     login(userData){
         return this.user.findUser(userData);        
     }
+    register(user){
+        return this.user.saveUser(user);
+    }
 }
 
 export default UserCtrl;

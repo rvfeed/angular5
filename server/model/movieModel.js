@@ -24,12 +24,14 @@ class MovieModel{
         return mongoDb.dbo.collection("movies").insert(movie);
     }
     deleteMovie(movieId){
-         return  mongoDb.dbo.collection("movies").update({_id: mongodb.ObjectID(movieId)}, {$set: {deleted: 1}})
+         return  mongoDb.dbo.collection("movies")
+         .update({_id: mongodb.ObjectID(movieId)}, {$set: {deleted: 1}})
     }
        updateMovie(movieId, movie){
            console.log(movieId)
            console.log(movie)
-         return  mongoDb.dbo.collection("movies").update({_id: mongodb.ObjectID(movieId)}, movie)
+         return  mongoDb.dbo.collection("movies")
+         .update({_id: mongodb.ObjectID(movieId)}, movie)
     }
 }
 

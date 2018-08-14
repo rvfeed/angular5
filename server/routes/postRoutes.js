@@ -17,6 +17,13 @@ routes.post("/login", (req, res) => {
    //     console.log(err);
     });
 });
+routes.post("/register", (req, res) => {
+    uCtrl.register(req.body.user).then( m =>  { 
+        console.log(m);
+         res.send(m); 
+         res.end();
+     } )
+})
 routes.post("/movies", (req, res) => { 
 //   console.log(req.params)
    mCtrl.findMovies(req.body).then( movies =>{

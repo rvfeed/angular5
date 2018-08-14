@@ -7,7 +7,7 @@ class UserModel{
        
     }
     saveUser(data){
-        return mongoDb.dbo.posts.save(data);
+        return mongoDb.dbo.collection("users").insert(data);
     }
 }
 
