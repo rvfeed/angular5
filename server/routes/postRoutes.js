@@ -1,8 +1,37 @@
 import express from 'express';
+import bcrypt from 'bcryptjs'
 import  UserCtrl  from "../ctrls/userCtrl";
 import  PostCtrl  from "../ctrls/postCtrl";
 import  MovieCtrl  from "../ctrls/movieCtrl";
 import mongodb from "../db/connectDb";
+import config from '../config';
+import jwt from 'jsonwebtoken';
+
+class resMessage{
+  success= false;
+    result= {};
+    msg= ""
+    constructor(obj)
+    {
+         if(obj){
+            this.result = obj;
+            this.success = true;
+            this.msg = obj.message || "";
+            this.token = this.generateToken;
+        }
+    }
+    set message(msg){
+        this.msg = msg;
+    }
+    get message(){
+        return this.msg;
+    }
+    get generateToken(){
+    return jwt.sign({username: this.username, email: this.email}, config.secret, {expiresIn: 86400})
+        
+        
+    }
+}
 let routes = express.Router();
 let uCtrl = new UserCtrl()
 let pCtrl = new PostCtrl()
@@ -10,7 +39,9 @@ let mCtrl = new MovieCtrl()
 routes.post("/login", (req, res) => {
     uCtrl.login(req.body.user)
     .then( result => {
-        res.json(result || {});
+        console.log(result)
+    
+        res.json(new resMessage(result));
         res.end();
     })
     .catch( err => {
@@ -18,11 +49,19 @@ routes.post("/login", (req, res) => {
     });
 });
 routes.post("/register", (req, res) => {
+    var hashedPassword = bcrypt.hashSync(req.body.user.password, 8);
+    req.body.user.password = hashedPassword;
     uCtrl.register(req.body.user).then( m =>  { 
         console.log(m);
-         res.send(m); 
+        if(m.result.ok)
+            res.json({success: true, message: "User has been registered successfully"}); 
+         else
+            res.json({success: false, message: "Unable to register the user"});
          res.end();
      } )
+     .catch( err => {
+         res.status(500).send("There was a problem registering the user.")
+     })
 })
 routes.post("/movies", (req, res) => { 
 //   console.log(req.params)
@@ -36,7 +75,6 @@ routes.post("/addmovie", (req, res) => {
   // console.log("req.body", req.body);
      mCtrl.saveMovie(req.body.movie)
      .then( movie => {
-         console.log(movie)
         res.json({success:true,  data: movie.ops[0], message: "Movie has been added successfully"});      
      })
      .catch( err => {

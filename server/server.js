@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import  config  from './config';
 import  connectMongo  from './db/connectDb';
 import proutes from "./routes/postRoutes" ;
+import bcrypt from 'bcryptjs';
 const app = express();
 //app.use(express.static("static"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,7 +15,9 @@ app.use((req, res, next) => {
     res.header("Content-Type", "application/json");
     next(); 
 });
-
+app.use((req, res, next) => {
+   next();
+})
 app.use("/", proutes);
 /*app.get("/", (req, res) => {    
     res.send("welcome Home!");
