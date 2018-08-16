@@ -11,13 +11,14 @@ class resMessage{
   success= false;
     result= {};
     msg= ""
+    
     constructor(obj)
     {
          if(obj){
             this.result = obj;
             this.success = true;
             this.msg = obj.message || "";
-            this.token = this.generateToken;
+           
         }
     }
     set message(msg){
@@ -26,11 +27,11 @@ class resMessage{
     get message(){
         return this.msg;
     }
-    get generateToken(){
-    return jwt.sign({username: this.username, email: this.email}, config.secret, {expiresIn: 86400})
-        
-        
+     get generateToken(){
+    return jwt.sign({username: this.username, email: this.email},
+                    config.secret, {expiresIn: 86400});
     }
+    
 }
 let routes = express.Router();
 let uCtrl = new UserCtrl()
@@ -40,8 +41,13 @@ routes.post("/login", (req, res) => {
     uCtrl.login(req.body.user)
     .then( result => {
         console.log(result)
-    
-        res.json(new resMessage(result));
+        var randomNumber=Math.random().toString();
+        let replyMsg = new resMessage(result);
+           randomNumber=randomNumber.substring(2,randomNumber.length);
+           res.cookie('x-xsrf-token', replyMsg.generateToken,
+           { maxAge: 900000, httpOnly: true })
+
+        res.json(replyMsg);
         res.end();
     })
     .catch( err => {
@@ -64,7 +70,7 @@ routes.post("/register", (req, res) => {
      })
 })
 routes.post("/movies", (req, res) => { 
-//   console.log(req.params)
+   //console.log(req.headers.cookie.match(^))
    mCtrl.findMovies(req.body).then( movies =>{
 res.json(movies|| {});
     res.end();

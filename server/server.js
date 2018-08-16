@@ -4,14 +4,17 @@ import  config  from './config';
 import  connectMongo  from './db/connectDb';
 import proutes from "./routes/postRoutes" ;
 import bcrypt from 'bcryptjs';
+import cors from 'cors';
 const app = express();
 //app.use(express.static("static"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+//app.use(cors({credentials: true}));
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, x-access-token, X-XSRF-TOKEN");
+    res.header('Access-Control-Allow-Credentials', true);
     res.header("Content-Type", "application/json");
     next(); 
 });
