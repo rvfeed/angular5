@@ -38,6 +38,9 @@ let uCtrl = new UserCtrl()
 let pCtrl = new PostCtrl()
 let mCtrl = new MovieCtrl()
 routes.post("/login", (req, res) => {
+    console.log(req.body.user.password)
+  //   var hashedPassword = bcrypt.hashSync(req.body.user.password, 8);
+  //  req.body.user.password = hashedPassword;
     uCtrl.login(req.body.user)
     .then( result => {
         console.log(result)
@@ -55,8 +58,9 @@ routes.post("/login", (req, res) => {
     });
 });
 routes.post("/register", (req, res) => {
-    var hashedPassword = bcrypt.hashSync(req.body.user.password, 8);
-    req.body.user.password = hashedPassword;
+    console.log(req.body.user.password)
+ //   var hashedPassword = bcrypt.hashSync(req.body.user.password, 8);
+  //  req.body.user.password = hashedPassword;
     uCtrl.register(req.body.user).then( m =>  { 
         console.log(m);
         if(m.result.ok)

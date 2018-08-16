@@ -3,6 +3,7 @@ import mongoDb from "../db/connectDb";
 class UserModel{
     constructor(){}
     findUser(user){
+        console.log(user)
         return  mongoDb.dbo.collection("users").findOne({"username": user.username, "password": user.password });
        
     }
