@@ -64,7 +64,7 @@ const routing: ModuleWithProviders = RouterModule.forRoot(routes, {useHash: true
     WallComponent,
     CommentComponent,
     SearchPipe,
-    TestDirective
+    TestDirective, DashboardComponent, Child1Component, Child2Component, Child3Component
   ],
   imports: [
     BrowserModule,

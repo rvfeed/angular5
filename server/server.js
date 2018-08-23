@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import  config  from './config';
 import  connectMongo  from './db/connectDb';
-import proutes from "./routes/postRoutes" ;
+import proutes from "./routes/routes" ;
 import bcrypt from 'bcryptjs';
 import cors from 'cors';
 const app = express();
