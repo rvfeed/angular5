@@ -1,3 +1,5 @@
+import  MovieCtrl  from "../ctrls/movieCtrl";
+let mCtrl = new MovieCtrl();
 let MovieRoutes = function(routes){
     routes.post("/movies", (req, res) => { 
    //console.log(req.headers.cookie.match(^))

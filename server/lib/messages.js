@@ -8,7 +8,7 @@ class ResMessage{
     constructor(obj)
     {
          if(obj){
-            this.result = obj;
+           // this.result = obj;
             this.success = true;
             this.msg = obj.message || "";
            
@@ -24,6 +24,7 @@ class ResMessage{
     return jwt.sign({username: this.username, email: this.email},
                     config.secret, {expiresIn: 86400});
     }
+    
     
 }
 module.exports = ResMessage;
