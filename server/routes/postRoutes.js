@@ -16,7 +16,7 @@ let postRoutes = function(routes){
         .then( result => {           
             var randomNumber=Math.random().toString();
             let replyMsg = new ResMessage(result);
-             console.log("result", replyMsg)
+             console.log("result", result)
              const msgLen = replyMsg.generateToken.length;            
             replyMsg.token = replyMsg.generateToken.substring(msgLen-10, msgLen);;
             randomNumber=randomNumber.substring(2,randomNumber.length);

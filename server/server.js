@@ -5,10 +5,12 @@ import  connectMongo  from './db/connectDb';
 import proutes from "./routes/routes" ;
 import bcrypt from 'bcryptjs';
 import TokenLib from './lib/tokenGen';
+import jwt from 'jsonwebtoken';
+import cookieparser from 'cookie-parser';
 
 const app = express();
 //app.use(express.static("static"));
-
+app.use(cookieparser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 //app.use(cors({credentials: true}));
@@ -21,9 +23,26 @@ app.use((req, res, next) => {
     next(); 
 });
 app.use((req, res, next) => {
-  //  console.log(req.cookies["X-XSRF-TOKEN"]);
-   // const tokenObj = new TokenLib(req.cookies['X-XSRF-TOKEN'], req.headers['sub-token'])
-   next();
+    if(req.originalUrl.indexOf("login") > -1 || req.method == "OPTIONS") next();
+    else{
+        console.log(req.originalUrl);
+        const tokenObj = new TokenLib();
+        tokenObj
+                .reFormatToken(req.cookies['X-XSRF-TOKEN'], req.body['sub-token'])
+                .checkTokenValid()
+                .then(decoded => {
+                    console.log(decoded);
+                    res.decoded = decoded;
+                    res.authenticated = true;
+                    next();
+                })
+                .catch( err => {
+                    console.log(err);
+                    res.sendStatus(403).send("Unauthorized")
+                })
+    }
+    
+   
 })
 app.use("/", proutes);
 
