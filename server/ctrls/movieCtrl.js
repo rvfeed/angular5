@@ -19,6 +19,9 @@ class MovieCtrl{
     updateMovie(id, movie){
         return this.movie.updateMovie(id, movie);      
     }
+    deleteSelectedMovies(movieIds){
+        return this.movie.deleteSelectedMovies(movieIds);
+    }
 }
 
 export default MovieCtrl;

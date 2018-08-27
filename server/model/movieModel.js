@@ -27,6 +27,11 @@ class MovieModel{
          return  mongoDb.dbo.collection("movies")
          .update({_id: mongodb.ObjectID(movieId)}, {$set: {deleted: 1}})
     }
+     deleteSelectedMovies(movies){
+         movies = movies.map( movie => mongodb.ObjectID(movie));
+         return  mongoDb.dbo.collection("movies")
+         .updateMany({_id: { $in : movies}}, {$set: {deleted: 1}})
+    }
        updateMovie(movieId, movie){
            console.log(movieId)
            console.log(movie)

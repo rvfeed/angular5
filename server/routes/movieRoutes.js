@@ -44,6 +44,18 @@ routes.put("/movie/:id", (req, res) => {
      }); 
 
 });
+routes.post("/deleteSelectedmovies", (req, res) => { 
+        mCtrl.deleteSelectedMovies(req.body.movieIds)
+     .then( movie => {
+       
+        res.json({success:true, message: "Selected Movies have been deleted successfully"});      
+     })
+     .catch( err => {
+          res.json({success:false, message: "There was an error while deleting movie!"});        
+     }); 
+
+});
+
 return routes;
 }
 module.exports = MovieRoutes;

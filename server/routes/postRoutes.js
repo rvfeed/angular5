@@ -1,55 +1,9 @@
 import express from 'express';
-import bcrypt from 'bcryptjs'
-import  UserCtrl  from "../ctrls/userCtrl";
+import bcrypt from 'bcryptjs';
 import  PostCtrl  from "../ctrls/postCtrl";
 import mongodb from "../db/connectDb";
-import ResMessage from '../lib/messages'
-import HashedPassword from '../lib/createHash';
-let postRoutes = function(routes){
-    let uCtrl = new UserCtrl();
-    let pCtrl = new PostCtrl();    
-   
-    routes.post("/login", (req, res) => {
-     const hashPwd = new HashedPassword(req.body.user.password)
-      req.body.user.password = hashPwd.hashedPassword;
-        uCtrl.login(req.body.user)
-        .then( result => {           
-            var randomNumber=Math.random().toString();
-            let replyMsg = new ResMessage(result);
-             console.log("result", result)
-             const msgLen = replyMsg.generateToken.length;            
-            replyMsg.token = replyMsg.generateToken.substring(msgLen-10, msgLen);;
-            randomNumber=randomNumber.substring(2,randomNumber.length);
-            res.cookie('X-XSRF-TOKEN', 
-                        replyMsg.generateToken.substring(0, msgLen-10),
-                        { maxAge: 900000, httpOnly: true });
-            res.json(replyMsg);
-            res.end();
-        })
-        .catch( err => {
-             res.json(err);
-            res.end();
-        });
-    });
-    routes.post("/register", (req, res) => {
-       
-       const hashPwd = new HashedPassword(req.body.user.password);   
-      req.body.user.password = hashPwd.hashedPassword;
-           console.log(req.body.user)
-        uCtrl.register(req.body.user).then( m =>  { 
-            console.log(m);
-            if(m.result.ok)
-                res.json({success: true, message: "User has been registered successfully"}); 
-            else
-                res.json({success: false, message: "Unable to register the user"});
-            res.end();
-        } )
-        .catch( err => {
-            console.log(err);
-            res.status(500).send("There was a problem registering the user.")
-        })
-    })
-
+let postRoutes = function(routes){    
+    let pCtrl = new PostCtrl(); 
     routes.get("/", (req, res) => {    
         res.send("welcome Home!");
         res.end();

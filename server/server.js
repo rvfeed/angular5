@@ -2,11 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import  config  from './config';
 import  connectMongo  from './db/connectDb';
-import proutes from "./routes/routes" ;
+import proutes from "./routes" ;
 import bcrypt from 'bcryptjs';
 import TokenLib from './lib/tokenGen';
 import jwt from 'jsonwebtoken';
 import cookieparser from 'cookie-parser';
+import test from './schema';
 
 const app = express();
 //app.use(express.static("static"));
@@ -22,16 +23,17 @@ app.use((req, res, next) => {
     res.header("Content-Type", "application/json");
     next(); 
 });
+const exclude = ["login", "register"];
 app.use((req, res, next) => {
-    if(req.originalUrl.indexOf("login") > -1 || req.method == "OPTIONS") next();
+    const exUrl = req.originalUrl.split("/").filter( r => r != "")[0];
+    if(exclude.indexOf(exUrl) > -1 || req.method == "OPTIONS") next();
     else{
         console.log(req.originalUrl);
         const tokenObj = new TokenLib();
         tokenObj
                 .reFormatToken(req.cookies['X-XSRF-TOKEN'], req.body['sub-token'])
                 .checkTokenValid()
-                .then(decoded => {
-                    console.log(decoded);
+                .then(decoded => {                    
                     res.decoded = decoded;
                     res.authenticated = true;
                     next();
@@ -45,20 +47,6 @@ app.use((req, res, next) => {
    
 })
 app.use("/", proutes);
-
-app.post("/register", (req, res) => {    
-    let doc = [];
-    doc.push(req.body);
-     connectMongo.dbo.collection("users").insertMany(doc)
-    .then( (result) => {
-        console.log(result);
-    }).catch((err) =>{
-        console.log(err);
-    })
-    res.json({"response": "success" });
-    res.end();
-})
-
 app.listen(config.port, () => {
     console.log("Server is listening to "+config.port);
 });
