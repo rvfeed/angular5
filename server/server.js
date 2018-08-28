@@ -38,8 +38,7 @@ app.use((req, res, next) => {
                     res.authenticated = true;
                     next();
                 })
-                .catch( err => {
-                    console.log(err);
+                .catch( err => {                 
                     res.sendStatus(403).send("Unauthorized")
                 })
     }

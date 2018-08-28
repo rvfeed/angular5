@@ -23,6 +23,12 @@ class ResMessage{
     get message(){
         return this.msg;
     }
+    set results(result){
+        this.result = result;        
+    }
+    get results(){
+        return this.result;        
+    }
      get generateToken(){
     return jwt.sign({username: this._username, email: this._email},
                     config.secret, {expiresIn: 86400});

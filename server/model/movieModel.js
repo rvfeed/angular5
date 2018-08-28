@@ -14,9 +14,12 @@ class MovieModel{
          findObj.deleted = {$ne : 1}
          console.log(findObj)
         return new Promise((resolve, reject) => {
-                mongoDb.dbo.collection("movies").find(findObj).limit(+obj.limit).sort(sort).toArray( (err, movies) => {
-                        if(err) reject(err);  else resolve(movies);
-                }); 
+                mongoDb.dbo.collection("movies").find(findObj)
+                                                .limit(+obj.limit).sort(sort)
+                                                .toArray( (err, movies) => {
+                                                    if(err) reject(err);
+                                                     else resolve(movies);
+                                                }); 
         }) 
               
     }
