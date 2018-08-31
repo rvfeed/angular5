@@ -26,7 +26,6 @@ class TokenLib{
     }
     checkTokenValid(){
         return new Promise(( resolve, reject) => {
-            console.log("_fullToken", this._fullToken)
             jwt.verify(this._fullToken, this._secret, (err, decoded)=>{         
                 if(err) reject(err.message);
                 resolve(decoded);
