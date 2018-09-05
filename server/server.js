@@ -11,6 +11,8 @@ import test from './schema';
 import formidable from 'formidable';
 import util from 'util';
 import  nodemailer from 'nodemailer';
+import https from 'https';
+import fs from 'fs';
 const IncomingForm = formidable.IncomingForm;
 
 const app = express();
@@ -19,6 +21,13 @@ app.use(cookieparser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 //app.use(cors({credentials: true}));
+/*app.use(function(req, res, next) {
+    if (req.secure) {
+        next();
+    } else {
+        res.redirect('https://' + req.headers.host + req.url);
+    }
+});*/
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
@@ -27,7 +36,8 @@ app.use((req, res, next) => {
     res.header("Content-Type", "application/json");
     next(); 
 });
-const exclude = ["login", "register", "fileupload", "email"];
+
+const exclude = ["login", "register", "fileupload", "email", "acl"];
 function checkAuth(c){
     const tokenObj = new TokenLib();
     return function(b){
@@ -119,6 +129,13 @@ app.use("/", proutes);
 app.listen(config.port, () => {
     console.log("Server is listening to "+config.port);
 });
+/*console.log(fs.readFileSync("./cert.pem"))
+const cert = fs.readFileSync("./cert.pem");
+const key = fs.readFileSync("./key.pem");
+https.createServer({key, cert}, app).listen(9090, () => {
+    console.log("Server is listening to "+9090);
+}); */
+
 process.on("uncaughtException", (e)=>{
    console.log("asdfasdf", e)
 })

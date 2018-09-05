@@ -6,12 +6,14 @@ class ConnectMongo{
     db;
     ObjectId;
     constructor(){
+        console.log("conn:",this instanceof ConnectMongo)
+        if(!(this instanceof ConnectMongo)) return new ConnectMongo();
         this.dbUrl = config.db;
         console.log(config);
         this.ObjectId = mongodb.ObjectID;
         console.log(config.db);
         console.log(config.database);
-        mongodb.MongoClient.connect(config.db, (err, db) => {
+        mongodb.MongoClient.connect(config.db,{poolSize: 10},  (err, db) => {
                 if(err){
                     throw err;
                 } else{   

@@ -1,0 +1,21 @@
+{
+    "_id" : ObjectId("5b8fdeea1a7a1940d8030007"),
+    "admin" : {
+        "edit" : true,
+        "delete" : true,
+        "add" : true,
+        "view" : true
+    },
+    "user" : {
+        "edit" : true,
+        "delete" : true,
+        "add" : true,
+        "view" : true
+    },
+    "guest" : {
+        "edit" : false,
+        "delete" : false,
+        "add" : false,
+        "view" : true
+    }
+}
