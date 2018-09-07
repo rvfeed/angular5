@@ -1,0 +1,9 @@
+<div *ngFor="let comment of comments; let i = index" class="col-sm-12" 
+      style="border:1px solid #c4c4c4; min-height: 50px; margin-bottom: 5px;border-radius:5px;">
+      {{comment.user}} -- {{comment.comment}} -- {{comment.date | date: 'dd/MM/yyyy'}}
+      <div (click)="remove(comment.id)" style="float:right;clear:both;font-size: 10px">X</div> 
+      <div class="glyphicon glyphicon-heart" style="clear: both;float: right;margin-top: 14px;" (click) = "likeIt(comment.id)">
+            {{comment.likes}}
+      </div>  
+</div>
+<br/>

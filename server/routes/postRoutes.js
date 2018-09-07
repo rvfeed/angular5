@@ -98,7 +98,7 @@ let postRoutes = function(routes){
     
         pCtrl.readAll()
         .then(result => {
-            console.log(result);
+         //   console.log(result);
             res.json({"result": result});
             res.end()
         })

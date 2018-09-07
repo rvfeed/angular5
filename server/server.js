@@ -1,19 +1,32 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import  config  from './config';
-import  connectMongo  from './db/connectDb';
 import proutes from "./routes" ;
-import bcrypt from 'bcryptjs';
 import TokenLib from './lib/tokenGen';
-import jwt from 'jsonwebtoken';
 import cookieparser from 'cookie-parser';
-import test from './schema';
 import formidable from 'formidable';
-import util from 'util';
 import  nodemailer from 'nodemailer';
-import https from 'https';
-import fs from 'fs';
+import generalRoutes from './routes/generalRoutes';
+import acl from './acl/acl';
+console.log("1\n")
+
+/* new Promise( (r, j) => {
+    for(let i =0; i < 10000000000; i++){}
+    r("ok")
+}).then(console.log) */
+function testAsync(cb){
+   process.nextTick( ()=> {
+       for(let i =0; i < 10000000000; i++){}
+    cb("ok");
+   })
+}
+testAsync((a)=> console.log("asdasd", a))
+//acl.can('admin', 'edit', {currentUserId:1 , userId: 1}).then(console.log)
+ 
+
+console.log("2\n")
 const IncomingForm = formidable.IncomingForm;
+
 
 const app = express();
 //app.use(express.static("static"));
@@ -51,22 +64,23 @@ function checkAuth(c){
     }
     
 }
-app.use((req, res, next) => {
-    const exUrl = req.originalUrl.split("/").filter( r => r != "")[0];
-    if(exclude.indexOf(exUrl) > -1 || req.method == "OPTIONS") next();
-    else{
-        console.log(req.originalUrl);
-        checkAuth(req.cookies['X-XSRF-TOKEN'])(req.body['sub-token'])
-                .then(decoded => {                    
-                    res.decoded = decoded;
-                    res.authenticated = true;
-                    next();
-                })
-          .catch(e=> e)
+function authenticate(req, res, next){
+        next(); return true;
+        const exUrl = req.originalUrl.split("/").filter( r => r != "")[0];
+        if(exclude.indexOf(exUrl) > -1 || req.method == "OPTIONS") next();
+        else{
+            console.log(req.originalUrl);
+            checkAuth(req.cookies['X-XSRF-TOKEN'])(req.body['sub-token'])
+                    .then(decoded => {                    
+                        res.decoded = decoded;
+                        res.authenticated = true;
+                        next();
+                    })
+              .catch(e=> e)
+        }
+        
+       
     }
-    
-   
-})
 
 app.get("/email", (req, res) =>{
 console.log("emaillll")
@@ -125,16 +139,11 @@ form.on('progress', function(bytesReceived, bytesExpected) {
 });
     
 })
-app.use("/", proutes);
+app.use("/api/v1", proutes);
+app.use("/static", generalRoutes);
 app.listen(config.port, () => {
     console.log("Server is listening to "+config.port);
 });
-/*console.log(fs.readFileSync("./cert.pem"))
-const cert = fs.readFileSync("./cert.pem");
-const key = fs.readFileSync("./key.pem");
-https.createServer({key, cert}, app).listen(9090, () => {
-    console.log("Server is listening to "+9090);
-}); */
 
 process.on("uncaughtException", (e)=>{
    console.log("asdfasdf", e)

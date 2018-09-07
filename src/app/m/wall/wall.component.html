@@ -1,0 +1,27 @@
+<div *ngFor="let wallStatus of wallData; let i = index" class="col-md-4" 
+      style="border: 1px solid #ccc; margin-bottom: 10px; min-height: 100px; min-width: 500px; padding: 10px;">
+       <div (click)="remove(wallStatus._id)" style="float:right;clear:both;">X</div>
+  <p>{{wallStatus.status}}</p>
+  <div>
+    <div *appTest="let a of arrayNum" ><span>fgsdf{{arr}}</span></div>
+    <ul class="nav navbar-nav">
+      <li class="nav-item"> <a class="nav-link" (click) = "likeIt(wallStatus._id, 1)">
+        <span class="glyphicon glyphicon-heart" *ngIf="wallStatus.likes>0">{{wallStatus.likes}}</span> like</a> </li>
+      <li class="nav-item"> <a class="nav-link" (click) = "showComment(i)">Comment</a> </li>
+    </ul>
+    
+   <div>      <input type="text"  [(ngModel)] ="testModel" name="testModel" #testref /> {{testModel}}
+     <form [formGroup] = "commentForm" (ngSubmit) = "add(wallStatus._id)">
+ 
+  <div class="form-group">
+    <textarea formControlName = "comment" class="form-control" cols="10" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Comment" class="btn btn-primary"/>
+  </div>
+  </form>
+  <input type="button" (click)="pushNum()" class="btn btn-primary" value="PUSH" />
+  <app-comment  [comments]="wallStatus.comments" [postNum] = "wallStatus._id"></app-comment>
+   </div>
+</div>
+</div>

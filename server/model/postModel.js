@@ -11,11 +11,11 @@ class PostModel{
         return mongoDb.dbo.collection("users").findOne({"username": user });       
     }
     savePost(data){
-        this.post.status = data;
-        console.log(this.post);        
-        return  mongoDb.dbo.collection("posts").insert(this.post);
+      //  this.post.status = data;
+        console.log("asdfasd", data);        
+        return  mongoDb.dbo.collection("posts").insert({status: data});
     }
-    updatePost(record, post){}
+    updatePost(record, post){} 
     getAllPosts(){      
         return new Promise((resolve, reject) => {  
              mongoDb.dbo.collection("posts")

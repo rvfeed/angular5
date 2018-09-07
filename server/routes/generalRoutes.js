@@ -4,8 +4,7 @@
 import ResMessage from '../lib/messages'
 import HashedPassword from '../lib/createHash';
   function userRoutes(routes){
-      let uCtrl = new UserCtrl();
-      let aCtrl = new AclCtrl();
+      let uCtrl = new UserCtrl();    
       routes.post("/login", (req, res) => {
                 
      const hashPwd = new HashedPassword(req.body.user.password)
@@ -47,21 +46,7 @@ import HashedPassword from '../lib/createHash';
             res.status(500).send("There was a problem registering the user.")
         })
     })
-    routes.get("/acl", (req, res) => {      
-       
-        aCtrl.getAcl().then( m =>  { 
-             console.log(m);
-             if(m)
-                 res.json({success: true, message: "User has been registered successfully", result: m}); 
-             else
-                 res.json({success: false, message: "Unable to register the user"});
-             res.end();
-         } )
-         .catch( err => {
-             console.log(err);
-             res.status(500).send("There was a problem registering the user.")
-         })
-     })
+  
   }
 module.exports = userRoutes;
     
