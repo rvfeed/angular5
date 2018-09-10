@@ -1,5 +1,7 @@
 import  MovieCtrl  from "../ctrls/movieCtrl";
+import Rhbac from '../acl/acl';
 let mCtrl = new MovieCtrl();
+let rhbac = new Rhbac()
 let MovieRoutes = function(routes){
     routes.post("/movies", (req, res) => { 
    //console.log(req.headers.cookie.match(^))
@@ -23,7 +25,7 @@ routes.post("/movie/:id", (req, res) => {
     res.send("welcome Home!");
     res.end();
 });
-routes.delete("/movie/:id", (req, res) => { 
+routes.delete("/movie/:id", rhbac.checkAccess("movie:delete"), (req, res) => { 
         mCtrl.deleteMovie(req.params.id)
      .then( movie => {
        

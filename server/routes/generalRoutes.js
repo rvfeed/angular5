@@ -1,34 +1,27 @@
  import mongodb from "../db/connectDb";
  import  UserCtrl  from "../ctrls/userCtrl";
- import  AclCtrl  from "../ctrls/aclCtrl";
 import ResMessage from '../lib/messages'
 import HashedPassword from '../lib/createHash';
-  function userRoutes(routes){
+  function generalRoutes(routes){
       let uCtrl = new UserCtrl();    
-      routes.post("/login", (req, res) => {
+      routes.post("/login", async (req, res) => {
                 
      const hashPwd = new HashedPassword(req.body.user.password)
       req.body.user.password = hashPwd.hashedPassword;
-        uCtrl.login(req.body.user)
-            .then( result => {     
-                    
-                let replyMsg = new ResMessage(result);   
-                  console.log(replyMsg)                      
-                replyMsg.token = replyMsg.generateToken
-                                        .substring(replyMsg.generateToken.length-10, 
-                                                    replyMsg.generateToken.length);            
-                res.cookie('X-XSRF-TOKEN', 
-                            replyMsg.generateToken.substring(0, replyMsg.generateToken.length-10),
-                            { maxAge: 900000, httpOnly: true });
-                    
-                res.json(replyMsg);
+       let result=  await uCtrl.login(req.body.user)
+       let replyMsg = new ResMessage(result);
+       let jtoken = await replyMsg.generateToken;  
+                if(jtoken){
+                    replyMsg.token = jtoken.substring(jtoken.length-10, jtoken.length); 
+                    res.cookie('X-XSRF-TOKEN', 
+                                jtoken.substring(0, jtoken.length-10),
+                                { maxAge: 900000, httpOnly: true });
+                }else{
+                    replyMsg.msg = "Error"
+                }
+                res.json(replyMsg);               ;
                 res.end();
-            })
-            .catch( err => {
-                console.log(err)
-                res.json(err);
-                res.end();
-            });
+           
     });
     routes.post("/register", (req, res) => {       
        const hashPwd = new HashedPassword(req.body.user.password);   
@@ -48,5 +41,5 @@ import HashedPassword from '../lib/createHash';
     })
   
   }
-module.exports = userRoutes;
+module.exports = generalRoutes;
     

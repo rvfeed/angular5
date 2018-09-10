@@ -1,3 +1,4 @@
+const IncomingForm = formidable.IncomingForm;
 app.get("/email", (req, res) =>{
     console.log("emaillll")
         var transporter = nodemailer.createTransport({
@@ -55,3 +56,38 @@ app.get("/email", (req, res) =>{
     });
         
     })
+    //app.use(cors({credentials: true}));
+/*app.use(function(req, res, next) {
+    if (req.secure) {
+        next();
+    } else {
+        res.redirect('https://' + req.headers.host + req.url);
+    }
+});*/
+    app.get("/email", (req, res) =>{
+      console.log("emaillll")
+          var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'raj.lh404',
+          pass: '9885266514'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'raj.lh404@gmail.com',
+        to: 'akhil406@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+          res.json({"msg": "sent"})
+          res.end()
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      });

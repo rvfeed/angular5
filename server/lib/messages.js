@@ -4,16 +4,17 @@ class ResMessage{
   success= false;
     result= {};
     msg= ""
-    _username;
-    _password;
+    user = {}
+
     constructor(obj)
     {
-         if(obj){
-           // this.result = obj;
-           this._username = obj.username;
-           this._email = obj.email;
-            this.success = true;
-            this.msg = obj.message || "";
+         if(obj){          
+           this.user.id = obj._id;
+           this.user.username = obj.username;
+           this.user.email = obj.email;
+           this.user.role = obj.role;
+           this.success = true;
+           this.msg = obj.message || "";
            
         }
     }
@@ -29,9 +30,14 @@ class ResMessage{
     get results(){
         return this.result;        
     }
-     get generateToken(){
-    return jwt.sign({username: this._username, email: this._email},
-                    config.secret, {expiresIn: 86400});
+    get generateToken(){
+        return new Promise((r,j) => {
+            jwt.sign(this.user,  config.secret, {expiresIn: 86400 }, function(err, token) {
+                if(err) j(err);
+                r(token);
+              });
+        });
+       
     }
     
     
