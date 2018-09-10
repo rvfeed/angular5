@@ -1,21 +1,27 @@
 import roles from "./roles";
 const acl = {
+    superadmin:{
+        can: [],
+        inherits: ["admin"]
+    },
     admin:{
-       can: ["delete", "edit"],
+       can: ["user:add",
+       { 
+        name: ["user:delete", "user:edit"],
+        when: options => options.id == options.uid
+    }],
        inherits: ["user"]
     },
     user:{
-        can: ["add", 
+        can: ["post:add", 
             {
-                name: ['edit','delete'],
-                when: function(options){
-                    return options.currentUserId == options.userId
-                }
+                name: ['post:edit','post:delete'],
+                when: options => options.id == options.pid
             }],
         inherits: ["guest"]
     },
     guest:{
-        can: ["read"]
+        can: ["post:read"]
     }   
 }
 
@@ -49,31 +55,34 @@ class HRBAC{
         this._roles = map;
 
     }
-    can(role, operation, options){
-        return new Promise((res, rej) => {
-       //     for(let i=0; i< 100000000000; i++){}
-            let $role = this._roles[role];
-            console.log($role)   
-            if($role.can[operation]){
-                return res(true);
-            } 
-            if(!$role.inherits || $role.inherits.length == 0){
-                return res(false);
-            }
-        
-            if($role[operation]){
-                if(typeof $role[operation] == 'string'){
-                    return res(true);
-                }
-                if($role[operation](options)){
-                    return res(true);
-                }
-            } 
-            
+     async can(role, operation, options){
+   
+       //return await false;
+        let $role = this._roles[role];
+        if(!$role){
+            return await Promise.resolve(false);
+        } 
+        if(!$role.inherits || $role.inherits.length == 0){
+            return await Promise.resolve(false);
+        }
     
-            return res($role.inherits.some(role => this.can(role, operation, options)));
-        })       
-      
+        if($role[operation]){
+            if(typeof $role[operation] == 'string'){
+                return await Promise.resolve(true);
+            }
+            if($role[operation](options)){
+                return await Promise.resolve(true);
+            }
+        } 
+        
+        for(let role of $role.inherits){
+            return await this.can(role, operation, options)
+        }
+       // return await Promise.all($role.inherits.some(role => this.can(role, operation, options)));
+    
+     
+    
+       
 }
 }
 module.exports = new HRBAC(acl)

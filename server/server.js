@@ -14,14 +14,14 @@ console.log("1\n")
     for(let i =0; i < 10000000000; i++){}
     r("ok")
 }).then(console.log) */
-function testAsync(cb){
+/* function testAsync(cb){
    process.nextTick( ()=> {
        for(let i =0; i < 10000000000; i++){}
     cb("ok");
    })
-}
-testAsync((a)=> console.log("asdasd", a))
-//acl.can('admin', 'edit', {currentUserId:1 , userId: 1}).then(console.log)
+} */
+//testAsync((a)=> console.log("asdasd", a))
+//console.log(acl.can('admin', 'user:edit', {id:1 , uid: 1 }))
  
 
 console.log("2\n")
@@ -87,7 +87,7 @@ console.log("emaillll")
     var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'raj.lh404@gmail.com',
+    user: 'raj.lh404',
     pass: '9885266514'
   }
 });
@@ -138,6 +138,26 @@ form.on('progress', function(bytesReceived, bytesExpected) {
     console.log(bytesReceived, "--", bytesExpected)
 });
     
+})
+   function checkAccess(role, operation){
+    return async (req, res, next) => {
+        let val =   await acl.can(role, operation, {id:1 , pid: 1 });
+        console.log("val", val)
+        if(val ==  true){
+            next()
+        }else{
+            res.send({"msg": "failed"})
+        }     
+    }
+  }
+console.log("aaaaa")
+app.get("/test", (req, res) => {
+    console.log("test")
+    res.send({"msg": "test"})
+})
+app.get("/testAsync", checkAccess('user', 'post:edit'),  (req, res) => {
+    console.log("testAsync")
+    res.send({"msg": "testAsync"})
 })
 app.use("/api/v1", proutes);
 app.use("/static", generalRoutes);

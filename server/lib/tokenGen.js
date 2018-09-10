@@ -12,11 +12,11 @@ class TokenLib{
         if(secret)
              this._secret = secret;
     }   
-     generateToken(username, email){
+     async generateToken(username, email){
         if(!username && !email) throw "username and password are required"
         this._username = username;
         this._email = email;
-     return jwt.sign({username: this._username, email: this._email},
+     return await jwt.sign({username: this._username, email: this._email},
                    this._secret, {expiresIn: 86400});
     }
     
