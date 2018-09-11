@@ -2,7 +2,7 @@
  import  UserCtrl  from "../ctrls/userCtrl";
 import ResMessage from '../lib/messages'
 import HashedPassword from '../lib/createHash';
-  function userRoutes(routes){
+  function userRoutes(routes, rhbac){
       let uCtrl = new UserCtrl();
       routes.post("/getUsers", (req, res) => {
         uCtrl.getUsers()

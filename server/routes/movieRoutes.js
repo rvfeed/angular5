@@ -1,9 +1,8 @@
 import  MovieCtrl  from "../ctrls/movieCtrl";
 import Rhbac from '../acl/acl';
 let mCtrl = new MovieCtrl();
-let rhbac = new Rhbac()
-let MovieRoutes = function(routes){
-    routes.post("/movies", (req, res) => { 
+let MovieRoutes = function(routes, rhbac){
+    routes.post("/movies", rhbac.checkAccess("movie:read"), (req, res) => { 
    //console.log(req.headers.cookie.match(^))
    mCtrl.findMovies(req.body).then( movies =>{
 res.json(movies|| {});
@@ -11,7 +10,7 @@ res.json(movies|| {});
     });  
     
 });
-routes.post("/addmovie", (req, res) => {
+routes.post("/addmovie", rhbac.checkAccess("movie:add"), (req, res) => {
   // console.log("req.body", req.body);
      mCtrl.saveMovie(req.body.movie)
      .then( movie => {
@@ -36,7 +35,7 @@ routes.delete("/movie/:id", rhbac.checkAccess("movie:delete"), (req, res) => {
      }); 
 
 });
-routes.put("/movie/:id", (req, res) => { 
+routes.put("/movie/:id", rhbac.checkAccess("movie:edit"), (req, res) => { 
         mCtrl.updateMovie(req.params.id, req.body.movie)
      .then( movie => {
         res.json({success:true, message: "Movie has been updated successfully"});      
@@ -46,7 +45,7 @@ routes.put("/movie/:id", (req, res) => {
      }); 
 
 });
-routes.post("/deleteSelectedmovies", (req, res) => { 
+routes.post("/deleteSelectedmovies", rhbac.checkAccess("movie:delete"), (req, res) => { 
         mCtrl.deleteSelectedMovies(req.body.movieIds)
      .then( movie => {
        
